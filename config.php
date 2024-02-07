@@ -24,16 +24,16 @@
     $mysqli->query($sql);
 
     $sql = "CREATE TABLE IF NOT EXISTS libri(
-        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        titolo VARCHAR(150) NOT NULL,
-        autore VARCHAR(30) NOT NULL,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        titolo VARCHAR(255) NOT NULL,
+        autore VARCHAR(255) NOT NULL,
         anno_pubblicazione INT(4) NOT NULL,
-        genere VARCHAR(30) NOT NULL
+        genere VARCHAR(255) NOT NULL
     )";
     $mysqli->query($sql);
 
     //$sql = "INSERT INTO libri(titolo, autore, anno_pubblicazione, genere) VALUES('Daniele e il superpisello galattico', 'D.V.M', 2000, 'Fantasy Religioso')";
     //$mysqli->query($sql);
 
-    
+    $sql = "";
 ?>

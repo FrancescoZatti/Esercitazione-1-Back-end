@@ -12,29 +12,21 @@ $libri = getAllBooks($mysqli);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Libreria - Libri Per Tutti!</title>
+    <title>MyBooks</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
 </head>
 
-<body class="bg-dark">
-
-    <nav class="navbar navbar-expand-lg bg-dark text-white">
+<body>
+    <nav class="navbar bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand text-white" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Link</a>
-                    </li>
-                </ul>
-            </div>
+            <a class="navbar-brand" href="#">
+                <img src="assets/img/mybookslogo.png" alt="Logo" width="auto" height="40"
+                    class="d-inline-block align-text-top">
+                MyBooks
+            </a>
         </div>
     </nav>
 
@@ -43,9 +35,9 @@ $libri = getAllBooks($mysqli);
         Aggiungi un libro
     </button>
 
-    <table class="table table-dark table-hover container mt-4 border">
+    <table class="table table-hover container mt-4 border">
         <thead>
-            <tr>
+            <tr class="text-center">
                 <th scope="col">ID</th>
                 <th scope="col">Titolo</th>
                 <th scope="col">Autore</th>
@@ -53,27 +45,79 @@ $libri = getAllBooks($mysqli);
                 <th scope="col">Genere</th>
                 <th scope="col">Azioni</th>
             </tr>
-
         </thead>
         <tbody class="table-group-divider">
-            <?php
-            foreach ($libri as $key => $libro) {
-                echo '<tr>
-                <th scope="row">' . $libro['id'] . '</th>
-                <td>' . $libro['titolo'] . '</td>
-                <td>' . $libro['autore'] . '</td>
-                <td>' . $libro['anno_pubblicazione'] . '</td>
-                <td>' . $libro['genere'] . '</td>
-                <th class="d-flex justify-content-evenly">
-                    <a role="button" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
-                    <a role="button" class="btn btn-danger"><i class="bi bi-x-lg"></i></a> </th>
-                 </tr>';
-            }
-            ?>
+            <?php foreach ($libri as $key => $libro) { ?>
+                <tr class="text-center">
+                    <th scope="row">
+                        <?= $libro['id'] ?>
+                    </th>
+                    <td>
+                        <?= $libro['titolo'] ?>
+                    </td>
+                    <td>
+                        <?= $libro['autore'] ?>
+                    </td>
+                    <td>
+                        <?= $libro['anno_pubblicazione'] ?>
+                    </td>
+                    <td>
+                        <?= $libro['genere'] ?>
+                    </td>
+                    <th>
+                        <div class="d-flex justify-content-evenly align-items-center">
+                            <a role="button" class="btn btn-warning px-2 py-1" data-bs-toggle="modal"
+                                data-bs-target="#modaleUpdate_<?= $libro['id'] ?>"><i class="bi bi-pencil-square"></i></a>
+                            <a role="button" class="btn btn-danger px-2 py-1"
+                                href="gestione.php?action=remove&id=<?= $libro['id'] ?>"><i class="bi bi-x-lg"></i></a>
+                        </div>
+                    </th>
+                </tr>
+                <div class="modal fade" id="modaleUpdate_<?= $libro['id'] ?>" tabindex="-1"
+                    aria-labelledby="modaleUpdate<?= $libro['id'] ?>" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Modifica i dati</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST" action="gestione.php">
+                                    <input type="hidden" name="id" value="<?= $libro['id'] ?>">
+                                    <div class="mb-3">
+                                        <label for="titoloLibroUp" class="form-label">Titolo</label>
+                                        <input type="text" class="form-control" id="titoloLibroUp"
+                                            aria-describedby="titoloLibroUp" name="titoloUp"
+                                            value="<?= $libro['titolo'] ?>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="autoreLibroUp" class="form-label">Autore</label>
+                                        <input type="text" class="form-control" id="autoreLibroUp" name="autoreUp"
+                                            value="<?= $libro['autore'] ?>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="annoLibroUp" class="form-label">Anno di pubblicazione</label>
+                                        <input type="number" step="1" min="1" max="2024" class="form-control"
+                                            id="annoLibroUp" name="annoUp" value="<?= $libro['anno_pubblicazione'] ?>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="genereLibroUp" class="form-label">Genere</label>
+                                        <input type="text" class="form-control" id="genereLibroUp" name="genereUp"
+                                            value="<?= $libro['genere'] ?>">
+                                    </div>
+                                    <div class="modal-footer border-0">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Chiudi</button>
+                                        <button type="submit" class="btn btn-primary" name="action" value="update">Aggiorna
+                                            libro</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
         </tbody>
-
-
-
     </table>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
@@ -83,14 +127,12 @@ $libri = getAllBooks($mysqli);
 
 </html>
 
-
-
-
+<!-- Modale per l'aggiunta di un libro -->
 <div class="modal fade" id="modaleAggiunta" tabindex="-1" aria-labelledby="modaleAggiunta" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modaleAggiunta">Modal title</h1>
+                <h1 class="modal-title fs-5">Dati del libro</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -106,7 +148,8 @@ $libri = getAllBooks($mysqli);
                     </div>
                     <div class="mb-3">
                         <label for="annoLibro" class="form-label">Anno di pubblicazione</label>
-                        <input type="number" step="1" class="form-control" id="annoLibro" name="anno">
+                        <input type="number" step="1" min="1" max="2024" class="form-control" id="annoLibro"
+                            name="anno">
                     </div>
                     <div class="mb-3">
                         <label for="genereLibro" class="form-label">Genere</label>
@@ -114,11 +157,11 @@ $libri = getAllBooks($mysqli);
                     </div>
                     <div class="modal-footer border-0">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Aggiungi il libro</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="add">Aggiungi il
+                            libro</button>
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
