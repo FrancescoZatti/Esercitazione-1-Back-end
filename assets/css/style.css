@@ -1,0 +1,36 @@
+body {
+    background-color: #180022;
+}
+
+nav {
+    background-color: #65008675 !important;
+}
+
+.navbar-brand {
+    color: #e28bff;
+    font-weight: bold;
+}
+
+.navbar-brand:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.myBook {
+    background-color: #bf00ff2d;
+}
+
+.btnModifica {
+    background-color: #bf00ff;
+}
+
+.btnElimina {
+    background-color: #730099;
+}
+
+.addBook {
+    background-color: #e28bffd2;
+}
+
+.btnElimina:hover, .btnModifica:hover, .addBook:hover {
+    background-color: #e28bff9c;
+}

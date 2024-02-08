@@ -20,7 +20,7 @@ $libri = getAllBooks($mysqli);
 </head>
 
 <body>
-    <nav class="navbar bg-body-tertiary">
+    <nav class="navbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="assets/img/mybookslogo.png" alt="Logo" width="auto" height="40"
@@ -30,49 +30,72 @@ $libri = getAllBooks($mysqli);
         </div>
     </nav>
 
-    <button type="button" class="btn btn-primary mt-4 d-flex mx-auto" data-bs-toggle="modal"
+    <button type="button" class="addBook mt-4 d-flex mx-auto px-4 py-2 rounded-5 text-white text-decoration-none border-0" data-bs-toggle="modal"
         data-bs-target="#modaleAggiunta">
         Aggiungi un libro
     </button>
 
-    <table class="table table-hover container mt-4 border">
-        <thead>
-            <tr class="text-center">
-                <th scope="col">ID</th>
-                <th scope="col">Titolo</th>
-                <th scope="col">Autore</th>
-                <th scope="col">Anno</th>
-                <th scope="col">Genere</th>
-                <th scope="col">Azioni</th>
-            </tr>
-        </thead>
-        <tbody class="table-group-divider">
+    <div class="table container mt-4">
+        <div class="row d-flex justify-content-evenly align-items-center">
             <?php foreach ($libri as $key => $libro) { ?>
-                <tr class="text-center">
-                    <th scope="row">
+                <div class="myBook text-center container col-3 mx-2 mb-4 pb-3 rounded-5">
+                    <img
+                    src="assets/img/mybookslogoapp.png"
+                    class="copertinaLibro w-100"
+                    srcset="assets/img/mybookslogoapp.png ?>"
+                    alt="Copertina Libro"
+                    style="background-color: transparent">
+                    <span
+                    scope="row"
+                    class="d-none"
+                    style="background-color: transparent">
                         <?= $libro['id'] ?>
-                    </th>
-                    <td>
+                    </span>
+                    <span
+                    class="fs-5 fw-semibold text-white"
+                    style="background-color: transparent">
                         <?= $libro['titolo'] ?>
-                    </td>
-                    <td>
-                        <?= $libro['autore'] ?>
-                    </td>
-                    <td>
-                        <?= $libro['anno_pubblicazione'] ?>
-                    </td>
-                    <td>
-                        <?= $libro['genere'] ?>
-                    </td>
-                    <th>
+                    </span>
+                    <div
+                    class="divBook d-flex justify-content-evenly my-3 rounded-5 align-items-center text-light"
+                    style="background-color: #65008675;">
+                        <span
+                        class="fs-6 border-end border-white pe-5"
+                        style="background-color: transparent">
+                            <?= $libro['autore'] ?>
+                        </span>
+                        <span
+                        class="fs-6 fw-lighter"
+                        style="background-color: transparent">
+                            <?= $libro['anno_pubblicazione'] ?>
+                        </span>
+                    </div>
+                    <div
+                    class="py-3"
+                    style="background: transparent;
+                            border-top: solid 1px #e28bff9c;
+                            border-radius: 0 0 1rem 1rem;"
+                    >
+                        <span
+                        class="fs-6"
+                        style="background-color: transparent;
+                        color: #e28bff">
+                            <?= $libro['genere'] ?>
+                        </span>
+                    </div>
+                    
+                    <div class="mt-3" style="background-color: transparent">
                         <div class="d-flex justify-content-evenly align-items-center">
-                            <a role="button" class="btn btn-warning px-2 py-1" data-bs-toggle="modal"
-                                data-bs-target="#modaleUpdate_<?= $libro['id'] ?>"><i class="bi bi-pencil-square"></i></a>
-                            <a role="button" class="btn btn-danger px-2 py-1"
-                                href="gestione.php?action=remove&id=<?= $libro['id'] ?>"><i class="bi bi-x-lg"></i></a>
+                            <a role="button" class="btnModifica px-4 py-2 rounded-5 text-white text-decoration-none" data-bs-toggle="modal"
+                                data-bs-target="#modaleUpdate_<?= $libro['id'] ?>"><i class="bi bi-pencil-square me-1"></i>
+                                Modifica
+                            </a>
+                            <a role="button" class="btnElimina px-3 py-2 rounded-5 text-white text-decoration-none"
+                                href="gestione.php?action=remove&id=<?= $libro['id'] ?>"><i class="bi bi-x-lg"></i>
+                            Elimina</a>
                         </div>
-                    </th>
-                </tr>
+                    </div>
+                </div>
                 <div class="modal fade" id="modaleUpdate_<?= $libro['id'] ?>" tabindex="-1"
                     aria-labelledby="modaleUpdate<?= $libro['id'] ?>" aria-hidden="true">
                     <div class="modal-dialog">
@@ -117,17 +140,15 @@ $libri = getAllBooks($mysqli);
                     </div>
                 </div>
             <?php } ?>
-        </tbody>
-    </table>
+            </d>
+        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>
-
-<!-- Modale per l'aggiunta di un libro -->
 <div class="modal fade" id="modaleAggiunta" tabindex="-1" aria-labelledby="modaleAggiunta" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
